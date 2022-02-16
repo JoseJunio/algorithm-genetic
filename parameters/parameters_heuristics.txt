@@ -1,0 +1,3 @@
+NUM_MACHINES = 16
+NUM_TASKS = 512
+file = /Users/josejunio/Documents/Mestrado/Distribute_MultiObjective_Scheduling/hscp_instances/u_c_hihi.txt
