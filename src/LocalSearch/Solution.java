@@ -1,3 +1,4 @@
+
 package LocalSearch;
 
 public class Solution implements Cloneable{

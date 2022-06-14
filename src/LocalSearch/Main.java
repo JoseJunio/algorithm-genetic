@@ -5,6 +5,10 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import LocalSearch.Crossover.Crossover;
 import LocalSearch.Mutation.Mutation;
@@ -18,21 +22,36 @@ public class Main {
 	public static Parameters parameters = new Parameters("/parameters/parameters_ag.txt");
 
 	public static void main(String[] args) throws InterruptedException {
+		
+		Logger logger = Logger.getLogger("MyLog");  
+		FileHandler fh;
+		
+		UUID uuid = UUID.randomUUID();
+		
+		
+		try {  
+	        fh = new FileHandler(System.getProperty("user.dir") + "/logs/MyLogFile"+ uuid.toString() +".log");  
+	        logger.addHandler(fh);
+	        SimpleFormatter formatter = new SimpleFormatter();  
+	        fh.setFormatter(formatter);  
+	        logger.setUseParentHandlers(false);
+	    } catch (Exception e) {
+	        e.printStackTrace();  
+	    }  
 
 		double minimo = -7389100;
 
-		String[] test = new String[6];
-		test[0] = "7,1,1,1,1,1,1,4,2,1,1,1,9,7,7,1,1,2,1,6,1,12,8,4,1,6,1,1,11,1,1,1,1,2,5,1,7,6,8,14,1,2,9,2,8,1,5,2,2,1,13,1,2,1,1,3,5,4,16,4,4,6,7,9,1,1,1,1,8,1,2,1,6,4,2,1,1,1,3,1,1,16,9,1,1,1,6,1,5,12,1,1,1,1,4,1,1,2,5,1,3,1,1,2,2,1,15,1,1,1,1,1,1,4,2,1,1,8,3,10,4,2,1,1,1,7,1,2,3,2,1,9,2,15,4,1,1,1,7,3,16,5,12,3,6,4,1,1,9,11,2,3,1,1,15,1,3,1,2,3,16,1,10,2,2,1,3,11,1,1,6,3,4,2,2,2,1,4,14,11,7,2,1,1,5,1,1,2,2,1,6,8,1,3,3,4,1,4,1,3,11,1,1,1,3,2,1,14,3,2,1,3,3,1,1,2,1,5,11,1,1,3,2,1,1,2,6,1,12,10,4,1,5,1,1,1,11,1,1,8,2,1,1,1,10,6,1,1,5,1,12,3,5,11,1,2,1,1,2,3,1,7,1,2,2,1,2,4,8,4,1,1,2,2,4,1,1,1,2,1,2,1,1,1,15,1,3,13,1,10,3,14,2,1,1,2,1,2,1,7,1,1,1,1,1,2,2,1,15,12,7,1,1,2,3,1,1,1,2,1,1,1,1,2,9,2,1,14,1,1,1,1,1,1,1,11,13,2,1,2,2,1,6,2,1,6,3,1,6,1,5,1,2,1,1,1,1,5,4,2,1,3,5,3,1,1,5,2,6,2,3,5,2,1,1,9,2,3,2,2,1,1,1,4,1,3,1,1,2,1,3,14,3,1,1,3,1,1,9,4,1,9,1,1,2,2,1,4,12,1,1,3,10,5,8,1,3,4,6,3,10,1,11,3,1,1,1,2,1,1,1,3,1,2,14,2,7,5,2,3,1,1,2,1,1,10,1,1,13,1,4,6,1,11,1,2,1,4,14,2,1,1,5,2,5,1,1,4,1,1,1,3,1,1,3,2,2,3,1,2,1,4,4,1,4,15,2,1,4,1,7,3,2,4,4,1,2,1,5,1,9,1,1,7,13,1,1,1,1,2,10,5";
+		//String[] test = new String[6];
+		//test[0] = "7,1,1,1,1,1,1,4,2,1,1,1,9,7,7,1,1,2,1,6,1,12,8,4,1,6,1,1,11,1,1,1,1,2,5,1,7,6,8,14,1,2,9,2,8,1,5,2,2,1,13,1,2,1,1,3,5,4,16,4,4,6,7,9,1,1,1,1,8,1,2,1,6,4,2,1,1,1,3,1,1,16,9,1,1,1,6,1,5,12,1,1,1,1,4,1,1,2,5,1,3,1,1,2,2,1,15,1,1,1,1,1,1,4,2,1,1,8,3,10,4,2,1,1,1,7,1,2,3,2,1,9,2,15,4,1,1,1,7,3,16,5,12,3,6,4,1,1,9,11,2,3,1,1,15,1,3,1,2,3,16,1,10,2,2,1,3,11,1,1,6,3,4,2,2,2,1,4,14,11,7,2,1,1,5,1,1,2,2,1,6,8,1,3,3,4,1,4,1,3,11,1,1,1,3,2,1,14,3,2,1,3,3,1,1,2,1,5,11,1,1,3,2,1,1,2,6,1,12,10,4,1,5,1,1,1,11,1,1,8,2,1,1,1,10,6,1,1,5,1,12,3,5,11,1,2,1,1,2,3,1,7,1,2,2,1,2,4,8,4,1,1,2,2,4,1,1,1,2,1,2,1,1,1,15,1,3,13,1,10,3,14,2,1,1,2,1,2,1,7,1,1,1,1,1,2,2,1,15,12,7,1,1,2,3,1,1,1,2,1,1,1,1,2,9,2,1,14,1,1,1,1,1,1,1,11,13,2,1,2,2,1,6,2,1,6,3,1,6,1,5,1,2,1,1,1,1,5,4,2,1,3,5,3,1,1,5,2,6,2,3,5,2,1,1,9,2,3,2,2,1,1,1,4,1,3,1,1,2,1,3,14,3,1,1,3,1,1,9,4,1,9,1,1,2,2,1,4,12,1,1,3,10,5,8,1,3,4,6,3,10,1,11,3,1,1,1,2,1,1,1,3,1,2,14,2,7,5,2,3,1,1,2,1,1,10,1,1,13,1,4,6,1,11,1,2,1,4,14,2,1,1,5,2,5,1,1,4,1,1,1,3,1,1,3,2,2,3,1,2,1,4,4,1,4,15,2,1,4,1,7,3,2,4,4,1,2,1,5,1,9,1,1,7,13,1,1,1,1,2,10,5";
 		
 		int tasks = parameters.get_NUM_TASKS();
 		int machines = parameters.get_NUM_MACHINES();
 
 		ETCGenerator etcGenerator = new ETCGenerator(machines, tasks, parameters.getFileName());
 
-		// Solution minMin = Heuristics.min_min(etcGenerator.getETCDouble(), tasks,
-		// machines);
+		Solution minMin = Heuristics.min_min(etcGenerator.getETCDouble(), tasks, machines);
 
-		Solution minMin = Heuristics.generateTest(test[0], etcGenerator.getETCDouble(), tasks, machines);
+		//Solution minMin = Heuristics.generateTest(test[0], etcGenerator.getETCDouble(), tasks, machines);
 
 		// int popSize = 100;
 		int popSize = 150;
@@ -55,24 +74,12 @@ public class Main {
 		 * }
 		 */
 
-		// for (int a = 1; a < 6; a++) {
-		// popA[a] = Heuristics.generateTest(test[a], etcGenerator.getETCDouble(),
-		// tasks, machines);
-		// }
-
-		// popA[1] = Heuristics.generateTest(test[0], etcGenerator.getETCDouble(),
-		// tasks, machines);
-
+		//popA = Heuristics.readFile(System.getProperty("user.dir") + "/" + parameters.getFileNameTratado(), etcGenerator.getETCDouble(), tasks, machines, popA);
+		
 		for (int a = 1; a < popSize; a++) {
 			popA[a] = Heuristics.generatePopInitial(etcGenerator.getETCDouble(), tasks, machines);
 		}
 
-		//popA = Heuristics.readFile(System.getProperty("user.dir") + "/" + parameters.getFileNameTratado(), etcGenerator.getETCDouble(), tasks, machines, popA);
-
-		// for (int a = 50; a < popSize; a++) {
-		// popA[a] = Heuristics.generatePopInitial(etcGenerator.getETCDouble(), tasks,
-		// machines);
-		// }
 
 		int maxGenerations = parameters.getNumIteration();
 
@@ -95,6 +102,9 @@ public class Main {
 
 			System.out
 					.println("Best makespan " + String.format("%.2f", popA[0].makespan) + " in Generation " + e + "\n");
+			
+			logger.info("Best makespan " + String.format("%.2f", popA[0].makespan) + " in Generation " + e + "\n");
+			
 
 			// Crossover
 			for (int i = 0; i < 2; i++) {
@@ -214,10 +224,10 @@ public class Main {
 				}
 			}
 
-			// for (int i = 0; i < popSize; i++) {
+			 for (int i = 0; i < popSize; i++) {
 
 			// Buscar 20% da populacao
-			for (int i = 0; i < popSize/3; i++) {
+			//for (int i = 0; i < popSize/3; i++) {
 				localSearch(popA[i]);
 			}
 
@@ -228,7 +238,7 @@ public class Main {
 				popA[0] = backup;
 			}
 			
-			Thread.sleep(200);
+			//Thread.sleep(200);
 
 		}
 	}
@@ -283,7 +293,7 @@ public class Main {
 			double light = Double.MAX_VALUE;
 			int il = 0;
 
-			for (int i : tasksMoreLoad) {
+			for (int i : tasksMoreLoad) { 
 				if (solution.etc[i][min] < light) {
 					light = solution.etc[i][min];
 					il = i;
@@ -307,8 +317,8 @@ public class Main {
 				light = Double.MAX_VALUE;
 
 				for (int i : tasksLessLoad) {
-					if (solution.etc[i][min] < light) {
-						light = solution.etc[i][min];
+					if (solution.etc[i][max] < light) {
+						light = solution.etc[i][max];
 						kl = i;
 					}
 				}
