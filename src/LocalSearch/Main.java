@@ -47,11 +47,11 @@ public class Main {
 
 		ETCGenerator etcGenerator = new ETCGenerator(machines, tasks, parameters.getFileName());
 
-		Solution minMin = Heuristics.min_min(etcGenerator.getETCDouble(), tasks, machines);
+		//Solution minMin = Heuristics.min_min(etcGenerator.getETCDouble(), tasks, machines);
 
-		//Solution minMin = Heuristics.generateIndividualPaulo(parameters.getFilePaulo(), etcGenerator.getETCDouble(), tasks, machines);
+		Solution minMin = Heuristics.generateIndividualPaulo(parameters.getFilePaulo(), etcGenerator.getETCDouble(), tasks, machines);
 
-		int popSize = 200;
+		int popSize = 150;
 
 		Solution[] popA = new Solution[500];
 		Solution[] popB = new Solution[500];
