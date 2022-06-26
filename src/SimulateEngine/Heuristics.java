@@ -1,8 +1,6 @@
 package SimulateEngine;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -226,7 +224,15 @@ public class Heuristics {
 	}
 
 
-	public static Solution generateTest(String mappingStr, double[][] etc, int tasks, int machines) {
+	public static Solution generateIndividualPaulo(String fileName, double[][] etc, int tasks, int machines) throws IOException {
+
+		File file = new File(fileName);
+		FileReader fileReader = new FileReader(file);
+
+		BufferedReader br = new BufferedReader(fileReader);
+
+		String mappingStr = br.readLine();
+
 		String[] mapping = mappingStr.split(",");
 		
 		Solution solution = new Solution(etc);
@@ -265,7 +271,7 @@ public class Heuristics {
 			
 			for(String solutionParsed : solutionsParsed) {
 				//solutions.add(generateTest(solutionParsed, etc, tasks, machines));
-				solutions[i] = generateTest(solutionParsed, etc, tasks, machines);
+				solutions[i] = generateIndividualPaulo(solutionParsed, etc, tasks, machines);
 				i++;
 			}
 			

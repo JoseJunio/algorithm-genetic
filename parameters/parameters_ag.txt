@@ -1,6 +1,7 @@
 NUM_MACHINES = 16
 NUM_TASKS = 512
-file = hscp_instances/512x16/u_c_hilo.txt
+file = hscp_instances/512x16/u_i_hilo.txt
+filePaulo = instances_paulo/512x16/sol-u_i_hi.txt
 fileNameTratado = instances/u_c_hihi_tratado.txt
 populationMaskespan = 60
 percMutation = 5
